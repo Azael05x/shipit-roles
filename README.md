@@ -15,7 +15,7 @@ cache.
 Install with [npm](http://npmjs.com) or [yarn](https://yarnpkg.com):
 
 ```
-npm install --save backframe
+npm install --save shipit-roles
 ```
 
 ## Configuration
