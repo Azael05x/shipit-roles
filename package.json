@@ -1,0 +1,30 @@
+{
+  "name": "shipit-roles",
+  "version": "1.0.0",
+  "description": "Assign roles to servers and execute commands on sets of servers with specific roles",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mahaplatform/shipit-roles.git"
+  },
+  "license": "ISC",
+  "author": "Greg Kops <greg@thinktopography.com>",
+  "bugs": {
+    "url": "https://github.com/mahaplatform/shipit-roles/issues"
+  },
+  "homepage": "https://github.com/mahaplatform/shipit-roles#readme",
+  "maintainers": [
+    {
+      "name": "Greg Kops",
+      "email": "greg@thinktopography.com"
+    }
+  ],
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "shipit-utils": "^1.4.0",
+    "ssh-pool": "^1.5.0"
+  }
+}
