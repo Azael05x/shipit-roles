@@ -3,7 +3,7 @@ const utils = require('shipit-utils');
 const sshPool = require('ssh-pool');
 const _ = require('lodash');
 
-module.exports = (shipit) => {
+module.exports = function(shipit) {
 
   const servers = shipit.config.servers.reduce((servers, server) => {
 
@@ -30,14 +30,16 @@ module.exports = (shipit) => {
 
   }, { all: []})
 
+
   // create ssh pools keyed by role name
-  shipit.roles = Object.keys(servers).reduce((roles, role) => ({
-    ...roles,
-    [role]: new sshPool.ConnectionPool(servers[role], _.extend({}, shipit.options, _.pick(shipit.config, 'key', 'strict')))
-  }), {})
+  shipit.roles = Object.keys(servers).reduce((roles, role) => {
+    roles[role] = new sshPool.ConnectionPool(servers[role], _.extend({}, shipit.options, _.pick(shipit.config, 'key', 'strict')));
+    return roles
+  }, {})
+
 
   // monkey patch remote to accept a role option
-  shipit.remote = (command, options, cb) {
+  shipit.remote = function(command, options, cb) {
 
     if (options && options.cwd) {
       command = 'cd "' + options.cwd.replace(/"/g, '\\"') + '" && ' + command;
@@ -45,7 +47,7 @@ module.exports = (shipit) => {
     }
 
     if (options && options.role) {
-      return roles[role].run(command, options, cb);
+      return this.roles[options.role].run(command, options, cb);
     }
 
     return this.pool.run(command, options, cb);
@@ -53,7 +55,7 @@ module.exports = (shipit) => {
   }
 
   // monkey patch remoteCopy to accept a role option
-  shipit.remoteCopy = (src, dest, options, callback) {
+  shipit.remoteCopy = function(src, dest, options, callback) {
 
     if (_.isFunction(options)) {
       callback = options;
@@ -66,7 +68,7 @@ module.exports = (shipit) => {
       role: 'all'
     });
 
-    return roles[role].copy(src, dest, options, callback)
+    return this.roles[role].copy(src, dest, options, callback)
 
   }
 
