@@ -68,7 +68,7 @@ module.exports = function(shipit) {
       role: 'all'
     });
 
-    return this.roles[role].copy(src, dest, options, callback)
+    return this.roles[options.role].copy(src, dest, options, callback)
 
   }
 
