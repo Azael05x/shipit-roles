@@ -1,6 +1,6 @@
 {
   "name": "shipit-roles",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Assign roles to servers and execute commands on sets of servers with specific roles",
   "main": "index.js",
   "scripts": {
