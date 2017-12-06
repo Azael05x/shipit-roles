@@ -12,19 +12,25 @@ module.exports = function(shipit) {
       servers.all.push(server)
       return servers
     }
+    
+    const fullname = server.user+'@'+server.host
 
     // if no role, just add to all role
     if(!server.role) {
-      servers.all.push(server.user+'@'+server.host)
+      servers.all.push(fullname)
       return servers
     }
 
     // add server to all role
-    servers.all.push(server.user+'@'+server.host)
+    if(!_.includes(servers.all, fullname)) {
+      servers.all.push(server.user+'@'+server.host)
+    }
 
     // add server to role
     if(!servers[server.role]) servers[server.role] = []
-    servers[server.role].push(server.user+'@'+server.host)
+    if(!_.includes(servers[server.role], fullname)) {
+      servers[server.role].push(fullname)
+    }
 
     return servers
 
@@ -50,7 +56,7 @@ module.exports = function(shipit) {
       return this.roles[options.role].run(command, options, cb);
     }
 
-    return this.pool.run(command, options, cb);
+    return this.roles.all.run(command, options, cb);
 
   }
 
