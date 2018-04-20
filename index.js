@@ -12,7 +12,7 @@ module.exports = function(shipit) {
       servers.all.push(server)
       return servers
     }
-    
+
     const fullname = server.user+'@'+server.host
 
     // if no role, just add to all role
@@ -23,7 +23,7 @@ module.exports = function(shipit) {
 
     // add server to all role
     if(!_.includes(servers.all, fullname)) {
-      servers.all.push(server.user+'@'+server.host)
+      servers.all.push(fullname)
     }
 
     // add server to role
