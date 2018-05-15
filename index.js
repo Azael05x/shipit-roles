@@ -26,11 +26,14 @@ module.exports = function(shipit) {
       servers.all.push(fullname)
     }
 
-    // add server to role
-    if(!servers[server.role]) servers[server.role] = []
-    if(!_.includes(servers[server.role], fullname)) {
-      servers[server.role].push(fullname)
-    }
+    server.role = _.castArray(server.role)
+    _.forEach(server.role, (role) => {
+      // add server to role
+      if(!servers[role]) servers[role] = []
+      if(!_.includes(servers[role], fullname)) {
+        servers[role].push(fullname)
+      }
+    });
 
     return servers
 
